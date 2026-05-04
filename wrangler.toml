@@ -2,15 +2,15 @@ name = "tvbox-source-aggregator"
 main = "src/cf-entry.ts"
 compatibility_date = "2024-12-30"
 compatibility_flags = ["nodejs_compat"]
+node_compat = true  # 必须开启，解决Node.js依赖兼容问题
 
-# 自定义域名（可选，推荐配置）
-# 取消注释并替换为你自己的域名和 Zone ID
-# routes = [
-#   { pattern = "tvbox.87101.xyz/*", zone_id = "450540cc77094e1e81e4acf25f99ee4f" }
-# ]
+# 你的自定义域名配置（已启用）
+routes = [
+  { pattern = "tvbox.87101.xyz/*", zone_id = "450540cc77094e1e81e4acf25f99ee4f" }
+]
 
 [triggers]
-crons = ["0 * * * *"]  # 每小时触发，实际执行频率由 Admin 设置的聚合间隔控制
+crons = ["0 * * * *"]  # 每小时触发
 
 [[kv_namespaces]]
 binding = "KV"
@@ -18,7 +18,8 @@ id = "450540cc77094e1e81e4acf25f99ee4f"
 preview_id = "450540cc77094e1e81e4acf25f99ee4f"
 
 [vars]
-SPEED_TIMEOUT_MS = "5000"   # 源地址延迟阈值（毫秒）
-SITE_TIMEOUT_MS = "3000"    # 站点 API 延迟阈值（毫秒）
-FETCH_TIMEOUT_MS = "5000"   # 抓取配置 JSON 超时（毫秒）
-WORKER_BASE_URL = "https://tvbox.rio.edu.kg"  # CF 边缘代理依赖此配置（JAR/MacCMS/直播源代理）
+SPEED_TIMEOUT_MS = "5000"
+SITE_TIMEOUT_MS = "3000"
+FETCH_TIMEOUT_MS = "5000"
+# 先填你的默认Worker域名，部署成功后再改成你的自定义域名
+WORKER_BASE_URL = "https://tvbox-source-aggregator.你的用户名.workers.dev"
